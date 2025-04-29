@@ -10,15 +10,18 @@ Original file is located at
 # Mount Google Drive to access local files
 from google.colab import drive
 drive.mount('/content/drive')
+#--------------------------------------------------------------------------------------------
 
 # Import required libraries
 import tensorflow as tf
 from tensorflow.keras import applications
 import PIL
 import numpy as np
+#--------------------------------------------------------------------------------------------
 
 # Define input shape for the MobileNetV2 model
 input_shape = (224, 224)
+#--------------------------------------------------------------------------------------------
 
 # Load and preprocess an image from a given path
 # - Resizes the image
@@ -28,6 +31,7 @@ def load_image(path):
   img=PIL.Image.open(path).resize(input_shape)
   img=np.array(img)/255.0
   return img
+#--------------------------------------------------------------------------------------------
 
 # Load a pretrained MobileNetV2 model with the full classification layer
 # Weights are loaded from ImageNet
@@ -36,6 +40,7 @@ def load_net():
                                        include_top=True,
                                        weights='imagenet')
   return model
+#--------------------------------------------------------------------------------------------
 
 # Perform prediction on a preprocessed image using the model
 # Prints top 3 predicted ImageNet class labels and confidence scores
@@ -47,6 +52,7 @@ def prediction(model,img):
   decoded = applications.mobilenet.decode_predictions(result, top=3)[0]
   for i, (imagenet_id, label, confidence) in enumerate(decoded):
     print(f"{i+1}. {label}: {confidence:.2f}")
+#--------------------------------------------------------------------------------------------
 
 # Set image path (image should be stored in your Google Drive)
 path='path/pic.webp'
